@@ -88,4 +88,4 @@ class FileStorage:
                     count += 1
             return count
         else:
-            return len(self.all())
+            return None

@@ -94,4 +94,4 @@ class DBStorage:
             return 0
         else:
             all_cls = models.storage.all(cls)
-            return len(all_cls)
+            return len(all_cls.values())

@@ -73,7 +73,7 @@ class FileStorage:
         """ Returns the object based on the class and id"""
         if cls not in classes.values():
             return None
-        all_cls = models.storage.all(cls)
+        all_cls = self.all(cls)
         for value in all_cls.values():
             if (value.id == id):
                 return value
@@ -83,9 +83,9 @@ class FileStorage:
         """ Returns the number of objects in storage matching the given class.
         If no class is passed, returns the count of all objects in storage. """
         if cls is None:
-            return len(models.storage.all())
+            return len(self.all())
         elif cls not in classes.values():
             return 0
         else:
-            all_cls = models.storage.all(cls)
+            all_cls = self.all(cls)
             return len(all_cls.values())

@@ -2,10 +2,9 @@
 """new view for State objects that handles RESTFul API actions"""
 
 
-from crypt import methods
 from api.v1.views import app_views
 from models import storage
-from flask import jsonify, request, abort
+from flask import jsonify, abort, request
 from models.state import State
 
 

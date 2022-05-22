@@ -68,5 +68,6 @@ def update_state(state_id):
     state_obj.save()
     return jsonify(state_obj.to_dict()), 200
 
+
 if __name__ == "__main__":
     pass

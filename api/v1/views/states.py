@@ -3,9 +3,8 @@
 
 
 from api.v1.views import app_views
-from models import storage
-from flask import jsonify, abort, request
-from models.state import State
+from models import storage, state
+from flask import Flask, jsonify, abort, request
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
@@ -68,3 +67,6 @@ def update_state(state_id):
             setattr(state_obj, key, value)
     state_obj.save()
     return jsonify(state_obj.to_dict()), 200
+
+if __name__ == "__main__":
+    pass

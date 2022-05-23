@@ -25,7 +25,7 @@ def city(city_id):
         if json_req is None:
             return jsonify({'error': 'Not a JSON'}), 400
 
-    for key, value in json.items():
+    for key, value in json_req.items():
         if key in ('id', 'state_id', 'updated_at', 'created_at'):
             continue
         setattr(city_obj, key, value)

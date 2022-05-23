@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ module holds app """
 from os import getenv
-from flask import Flask, jsonify
+from flask import Flask, jsonify, Blueprint, make_response
 from models import storage
 from api.v1.views import app_views
 
@@ -10,7 +10,7 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def tear(exception):
+def tear(self):
     """ tear method """
     storage.close()
 
@@ -18,7 +18,7 @@ def tear(exception):
 @app.errorhandler(404)
 def not_found(err):
     """404 status"""
-    return jsonify({"error": "Not found"}), 404
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":

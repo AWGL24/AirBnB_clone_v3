@@ -3,15 +3,16 @@
 
 
 from api.v1.views import app_views
-from models import storage, state
-from flask import Flask, jsonify, abort, request
+from models import storage
+from flask import jsonify, abort, request
+from models.state import State
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_state():
     """list state objects"""
     state_obj = []
-    for obj in storage.all('State').values():
+    for obj in storage.all('State').items():
         state_obj.append(obj.to_dict())
     return jsonify(state_obj)
 
@@ -44,12 +45,11 @@ def post_state():
     json_req = request.get_json()
     if json_req is None:
         return jsonify({'error': 'Not a JSON'}), 400
-    elif 'name' not in json_req:
+    if 'name' not in json_req:
         return jsonify({'error': 'Missing name'}), 400
     new_state = State(**json_req)
-    storage.new(new_state)
     storage.save()
-    return jsonify({'id': new_state.id, 'name': new_state.name}), 201
+    return jsonify(new_state.to_dict()), 201
 
 
 @app_views.route('/states/<string:state_id>', methods=['PUT'],

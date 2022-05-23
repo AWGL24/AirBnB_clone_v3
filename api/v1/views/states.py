@@ -1,4 +1,4 @@
-#!/user/bin/python3
+#!/usr/bin/python3
 """new view for State objects that handles RESTFul API actions"""
 
 from flask import jsonify, abort, request

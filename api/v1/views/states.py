@@ -11,7 +11,7 @@ from api.v1.views import app_views
 def get_state():
     """list state objects"""
     state_obj = []
-    for obj in storage.all('State').items():
+    for obj in storage.all('State').values():
         state_obj.append(obj.to_dict())
     return jsonify(state_obj)
 

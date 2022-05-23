@@ -1,4 +1,4 @@
-#!/user/bin/python3
+#!/usr/bin/python3
 """new view for City objects that handles RESTFul API actions"""
 from api.v1.views import app_views
 from models import storage

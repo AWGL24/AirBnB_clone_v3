@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 """new view for City objects that handles RESTFul API actions"""
+import json
 from api.v1.views import app_views
 from models import storage
-from flask import jsonify
+from flask import jsonify, abort, request
 from models.state import State
 from models.city import City
 

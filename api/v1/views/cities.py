@@ -19,7 +19,7 @@ def city(city_id):
     if request.method == 'DELETE':
         storage.delete(city_obj)
         storage.save()
-        return ('{}', 200)
+        return jsonify('{}', 200)
 
     if request.method == 'PUT':
         json_req = request.get_json()
@@ -41,10 +41,12 @@ def city(city_id):
 def get_city(state_id):
     """ the state based on the id """
     city_obj = storage.get(State, state_id)
+    cityList = []
     if city_obj is None:
         abort(404)
-    cities = [city.to_dict() for city in city_obj.cities]
-    return jsonify(cities), 200
+    for city in city_obj.cities:
+        cityList.append(city.to_dict())
+    return jsonify(cityList), 200
 
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'],

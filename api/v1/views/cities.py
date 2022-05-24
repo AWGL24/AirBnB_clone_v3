@@ -8,7 +8,8 @@ from models.city import City
 from api.v1.views import app_views
 
 
-@app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'],
+                 strict_slashes=False)
 def city(city_id):
     """retrives, delets and updates city objects"""
     city_obj = storage.get('City', city_id)
@@ -35,7 +36,8 @@ def city(city_id):
     return jsonify(city_obj.to_dict())
 
 
-@app_views.route('states/<state_id>/cities', methods=['GET'])
+@app_views.route('states/<state_id>/cities', methods=['GET'],
+                 strict_slashes=False)
 def get_city(state_id):
     """ the state based on the id """
     city_obj = storage.get('State', state_id)
@@ -45,7 +47,8 @@ def get_city(state_id):
     return jsonify(cities), 200
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'])
+@app_views.route('/states/<state_id>/cities', methods=['POST'],
+                 strict_slashes=False)
 def create_city(state_id):
     """Create new city"""
     city_obj = storage.get(State, state_id)

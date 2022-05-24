@@ -64,7 +64,7 @@ def update_amenities(amenity_id):
     if json_req is None:
         abort(400, "Not a JSON")
 
-    for key, value in json_req.values():
+    for key, value in json_req.items():
         if key in ['id', 'created_at', 'updated_at']:
             pass
         else:

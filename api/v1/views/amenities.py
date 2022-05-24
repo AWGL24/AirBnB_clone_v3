@@ -45,13 +45,11 @@ def create_amenity():
     json_req = request.get_json(silent=True)
     if json_req is None:
         abort(400, "Not a JSON")
-    elif "name" not in json_req.keys():
+    elif "name" not in json_req:
         abort(400, "Missing Name")
-    else:
-        new = Amenity(**json_req)
-        storage.new(new)
-        storage.save()
-    return jsonify(new.to_dict(()), 201)
+    new = Amenity(**json_req)
+    new.save()
+    return jsonify(new.to_dict()), 201
 
 
 @ app_views.route('/amenities/<amenity_id>', methods=['PUT'],

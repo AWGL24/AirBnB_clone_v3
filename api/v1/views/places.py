@@ -1,11 +1,13 @@
 #!/usr/bin/python3
-"""new view for place objects that handles RESTFul API actions"""
+"""
+Module handels new view for place objects that handles RESTFul API actions
+"""
 
-from tkinter import Place
 from flask import jsonify, abort, request
 from models import storage
 from models.city import City
 from models.state import State
+from models.place import Place
 from models.amenity import Amenity
 from api.v1.views import app_views, index
 

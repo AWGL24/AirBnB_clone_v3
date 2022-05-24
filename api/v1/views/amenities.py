@@ -56,18 +56,18 @@ def create_amenity():
                   strict_slashes=False)
 def update_amenities(amenity_id):
     """ Updates amenity object """
-    amenity_obj = storage.get('Amenity', amenity_id)
+    amenity_obj = storage.get(Amenity, amenity_id)
     if amenity_obj is None:
         abort(404)
 
     json_req = request.get_json(silent=True)
     if json_req is None:
         abort(400, "Not a JSON")
-    else:
-        for key, value in json_req.values():
-            if key in ['id', 'created_at', 'updated_at']:
-                pass
-            else:
-                setattr(amenity_obj, key, value)
-        storage.save()
-        return jsonify(amenity_obj.to_dict()), 200
+
+    for key, value in json_req.values():
+        if key in ['id', 'created_at', 'updated_at']:
+            pass
+        else:
+            setattr(amenity_obj, key, value)
+    amenity_obj.save()
+    return jsonify(amenity_obj.to_dict()), 200

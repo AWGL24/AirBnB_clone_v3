@@ -27,7 +27,7 @@ def get_places(city_id):
                  strict_slashes=False)
 def places_id(place_id):
     """ Retrieves a places object by id """
-    place_obj = storage.get('Place', place_id)
+    place_obj = storage.get(Place, place_id)
     if place_obj is None:
         abort(404)
     return jsonify(place_obj.to_dict())
@@ -37,12 +37,11 @@ def places_id(place_id):
                  strict_slashes=False)
 def delete_place(place_id):
     """ Deletes a place based on id """
-    place_obj = storage.get('Place', place_id)
+    place_obj = storage.get(Place, place_id)
     if place_obj is None:
         abort(404)
-    else:
-        storage.delete(place_obj)
-        storage.save()
+    place_obj.delete()
+    storage.save()
     return jsonify({}), 200
 
 
@@ -55,12 +54,16 @@ def create_place(city_id):
     json_req = request.get_json(silent=True)
     if json_req is None:
         abort(400, "Not a JSON")
-    elif "name" not in json_req.keys():
-        abort(400, "Missing Name")
-    else:
-        new = Place(**json_req)
-        storage.new(new)
-        storage.save()
+    if "user_id" not in json_req:
+        abort(400, "Missing user_id")
+    user_obj = storage.get('User', json_req["user_id"])
+    if user_obj is None:
+        abort(404)
+    if "name" not in json_req:
+        abort(400, "Missing name")
+    json_req["city_id"] = city_id
+    new = Place(**json_req)
+    new.save()
     return jsonify(new.to_dict()), 201
 
 
@@ -68,18 +71,17 @@ def create_place(city_id):
                  strict_slashes=False)
 def update_place(place_id):
     """ Updates place object """
-    place_obj = storage.get('Place', place_id)
+    place_obj = storage.get(Place, place_id)
     if place_obj is None:
         abort(404)
 
     json_req = request.get_json(silent=True)
     if json_req is None:
         abort(400, "Not a JSON")
-    else:
-        for key, value in json_req.values():
-            if key in ['id', 'created_at', 'updated_at', 'user_id', 'city_id']:
-                pass
-            else:
-                setattr(place_obj, key, value)
-        storage.save()
+    for key, value in json_req.items():
+        if key in ['id', 'created_at', 'updated_at', 'user_id', 'city_id']:
+            pass
+        else:
+            setattr(place_obj, key, value)
+        place_obj.save()
         return jsonify(place_obj.to_dict()), 200

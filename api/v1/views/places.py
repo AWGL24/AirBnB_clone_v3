@@ -1,8 +1,10 @@
 #!/usr/bin/python3
 """new view for place objects that handles RESTFul API actions"""
 
+from tkinter import Place
 from flask import jsonify, abort, request
 from models import storage
+from models.city import City
 from models.state import State
 from models.amenity import Amenity
 from api.v1.views import app_views, index
@@ -10,14 +12,15 @@ from api.v1.views import app_views, index
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
-def get_places():
-    """This Is Unfinished"""
+def get_places(city_id):
+    """ Retrieves list of all place objects of a city"""
     city_obj = storage.get(City, city_id)
+    plist = []
     if city_obj is None:
         abort(404)
-    for place_obj in storage.all('Place').values():
-        place_obj.append(place_obj.to_dict())
-    return jsonify(place_obj)
+    for place in city_obj.places:
+        plist.append(place.to_dict())
+    return jsonify(plist)
 
 
 @app_views.route('/places/<place_id>', methods=['GET'],
@@ -27,7 +30,7 @@ def places_id(place_id):
     place_obj = storage.get('Place', place_id)
     if place_obj is None:
         abort(404)
-        return jsonify(place_obj.to_dict())
+    return jsonify(place_obj.to_dict())
 
 
 @app_views.route('/places/<places_id>', methods=['DELETE'],

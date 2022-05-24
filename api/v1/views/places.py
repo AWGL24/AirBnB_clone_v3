@@ -3,13 +3,14 @@
 Module handels new view for place objects that handles RESTFul API actions
 """
 
-from flask import jsonify, abort, request
+from flask import jsonify, abort, request, make_response
 from models import storage
+from models.base_model import BaseModel
 from models.city import City
 from models.state import State
 from models.place import Place
 from models.amenity import Amenity
-from api.v1.views import app_views, index
+from api.v1.views import app_views
 
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'],

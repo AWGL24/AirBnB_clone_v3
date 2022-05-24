@@ -10,7 +10,7 @@ from api.v1.views import app_views
 
 @app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
-def city(city_id):
+def city(city_id=None):
     """retrives, delets and updates city objects"""
     city_obj = storage.get(City, city_id)
     if city_obj is None:
@@ -19,7 +19,7 @@ def city(city_id):
     if request.method == 'DELETE':
         storage.delete(city_obj)
         storage.save()
-        return jsonify('{}', 200)
+        return jsonify({}, 200)
 
     if request.method == 'PUT':
         json_req = request.get_json()

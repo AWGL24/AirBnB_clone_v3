@@ -12,10 +12,11 @@ from models.user import User
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def users():
     """ Retrieves the list of user objects """
-    user_list = []
-    for user in user_list.storage.all('User').items():
-        user_list.append(user.to_dict())
-    return jsonify(user_list)
+    ulist = []
+    udict = storage.all('User')
+    for key, user in udict.items():
+        ulist.append(user.to_dict())
+    return jsonify(ulist)
 
 
 @app_views.route('/users/<string:user_id>', methods=['GET'],

@@ -28,7 +28,7 @@ def get_stateid(state_id):
 
 @app_views.route('/states/<string:state_id>', methods=['DELETE'],
                  strict_slashes=False)
-def delete_state(state_id):
+def StateDelete(state_id):
     """ Deletes a state based on id """
     state_obj = storage.get(State, state_id)
     if state_obj is None:

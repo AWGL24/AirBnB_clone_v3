@@ -5,11 +5,8 @@ Module handels new view for place objects that handles RESTFul API actions
 
 from flask import jsonify, abort, request, make_response
 from models import storage
-from models.base_model import BaseModel
 from models.city import City
-from models.state import State
 from models.place import Place
-from models.amenity import Amenity
 from api.v1.views import app_views
 
 
@@ -43,7 +40,7 @@ def delete_place(place_id):
     place_obj = storage.get(Place, place_id)
     if place_obj is None:
         abort(404)
-    place_obj.delete()
+    storage.delete(place_obj)
     storage.save()
     return jsonify({}), 200
 

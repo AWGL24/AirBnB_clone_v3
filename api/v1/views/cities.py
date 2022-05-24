@@ -12,11 +12,9 @@ from api.v1.views import app_views
                  strict_slashes=False)
 def city(city_id):
     """retrives, delets and updates city objects"""
-    if request.method == 'GET':
-        city_obj = storage.get(City, city_id)
-        if city_obj is None:
-            abort(404)
-        return jsonify(city_obj.to_dict())
+    city_obj = storage.get(City, city_id)
+    if city_obj is None:
+        abort(404)
 
     if request.method == 'DELETE':
         storage.delete(city_obj)

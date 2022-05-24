@@ -12,7 +12,7 @@ from api.v1.views import app_views
                  strict_slashes=False)
 def city(city_id):
     """retrives, delets and updates city objects"""
-    city_obj = storage.get('City', city_id)
+    city_obj = storage.get(City, city_id)
     if city_obj is None:
         abort(404)
 
@@ -40,7 +40,7 @@ def city(city_id):
                  strict_slashes=False)
 def get_city(state_id):
     """ the state based on the id """
-    city_obj = storage.get('State', state_id)
+    city_obj = storage.get(State, state_id)
     if city_obj is None:
         abort(404)
     cities = [city.to_dict() for city in city_obj.cities]
